@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clarix AI — Clarity Through Automation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #05060F;
+      --surface: #0B0D1A;
+      --surface2: #10132B;
+      --border: rgba(120,100,255,0.12);
+      --border2: rgba(120,100,255,0.25);
+      --purple: #7B5FFF;
+      --purple-light: #A48FFF;
+      --purple-dim: rgba(123,95,255,0.15);
+      --violet: #C084FC;
+      --text: #F0EEFF;
+      --text-sec: #9B91CC;
+      --text-dim: #5A5480;
+      --font-display: 'Plus Jakarta Sans', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    .cursor {
+      display: none;
+      position: fixed; width: 10px; height: 10px;
+      background: var(--purple); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
+      mix-blend-mode: screen;
+    }
+    .cursor-ring {
+      display: none;
+      position: fixed; width: 36px; height: 36px;
+      border: 1px solid rgba(123,95,255,0.5);
+      border-radius: 50%; pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease-out, width 0.3s, height 0.3s, opacity 0.3s;
+    }
+    @media (pointer: fine) {
+      .cursor { display: block; }
+      .cursor-ring { display: block; }
+    }
+
+    .light-beam {
+      position: fixed; pointer-events: none; z-index: 0;
+      opacity: 0; animation: beamFade 12s ease-in-out infinite;
+    }
+    .beam-1 {
+      top: -200px; left: 15%; width: 1px; height: 100vh;
+      background: linear-gradient(to bottom, transparent, rgba(123,95,255,0.4), rgba(164,143,255,0.15), transparent);
+      animation-delay: 0s; transform: rotate(-8deg);
+    }
+    .beam-2 {
+      top: -200px; left: 55%; width: 1px; height: 100vh;
+      background: linear-gradient(to bottom, transparent, rgba(192,132,252,0.25), rgba(123,95,255,0.1), transparent);
+      animation-delay: 4s; transform: rotate(5deg);
+    }
+    .beam-3 {
+      top: -200px; right: 20%; width: 1px; height: 100vh;
+      background: linear-gradient(to bottom, transparent, rgba(96,165,250,0.2), rgba(123,95,255,0.1), transparent);
+      animation-delay: 8s; transform: rotate(12deg);
+    }
+    @keyframes beamFade {
+      0%, 100% { opacity: 0; }
+      20%, 80% { opacity: 1; }
+    }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 999;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(123,95,255,0.015) 2px,
+        rgba(123,95,255,0.015) 4px
+      );
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025; pointer-events: none; z-index: 1000;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      padding: 20px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(5,6,15,0.95) 0%, transparent 100%);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.scrolled { border-color: var(--border); }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-display); font-weight: 800;
+      font-size: 20px; color: var(--text); text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo-icon {
+      width: 36px; height: 36px; background: var(--purple); border-radius: 8px;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 36px; }
+    .nav-links a {
+      color: var(--text-sec); text-decoration: none; font-size: 14px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--purple); color: #fff !important;
+      padding: 9px 22px; border-radius: 8px;
+      font-weight: 500 !important; font-size: 14px !important;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--purple-light) !important; }
+
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 48px 80px;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 8vw, 76px);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    /* ... add your remaining CSS here if you have it (orbs, reveal, pricing, chat, etc.) ... */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  </style>
+</head>
+<body>
+
+  <!-- Cursor elements -->
+  <div id="cursor" class="cursor"></div>
+  <div id="cursorRing" class="cursor-ring"></div>
+
+  <!-- Nav -->
+  <nav id="nav">
+    <a class="nav-logo" href="#">
+      Clarix AI
+    </a>
+    <div class="nav-links">
+      <a href="#solutions">Solutions</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#live-demo">Live Demo</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+    <a href="#" class="nav-cta">Book a Call</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero reveal">
+    <h1>Clarity Through Automation</h1>
+    <p>Your AI assistant that answers calls, captures leads, and books clients 24/7.</p>
+  </section>
+
+  <!-- Add your chat container, demo section, pricing, footer, etc. here if you have them copied -->
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Cursor setup
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    if (cursor && ring) {
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX;
+        my = e.clientY;
+        cursor.style.left = mx + 'px';
+        cursor.style.top = my + 'px';
+      });
+      function animateRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + 'px';
+        ring.style.top = ry + 'px';
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+    }
+
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    if (nav) {
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+      });
+    }
+
+    // Reveal observer
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(r => observer.observe(r));
+
+    // Your original demo engine, chat, counters, etc. go here
+    // Paste the rest of your original script from where you had it (tick, demoPlay, demoReset, etc.)
+
+    console.log("Original file loaded - check if interactive parts work");
+  });
+  </script>
+</body>
+</html>
