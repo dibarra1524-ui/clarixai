@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Clarix AI — Clarity Through Automation</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
@@ -55,7 +55,8 @@
       transition: transform 0.15s ease-out, width 0.3s, height 0.3s, opacity 0.3s;
     }
     @media (pointer: fine) {
-      .cursor, .cursor-ring { display: block; }
+      .cursor { display: block; }
+      .cursor-ring { display: block; }
     }
 
     nav {
@@ -75,14 +76,20 @@
       font-size: 20px; color: var(--text); text-decoration: none;
     }
 
-    .nav-links { display: flex; gap: 36px; }
-    .nav-links a { color: var(--text-sec); text-decoration: none; font-size: 14px; }
+    .nav-links { display: flex; align-items: center; gap: 36px; }
+    .nav-links a {
+      color: var(--text-sec); text-decoration: none; font-size: 14px;
+      transition: color 0.2s;
+    }
     .nav-links a:hover { color: var(--text); }
 
     .nav-cta {
-      background: var(--purple); color: white; padding: 9px 22px;
-      border-radius: 8px; font-weight: 500; text-decoration: none;
+      background: var(--purple); color: #fff !important;
+      padding: 9px 22px; border-radius: 8px;
+      font-weight: 500 !important; font-size: 14px !important;
+      transition: background 0.2s;
     }
+    .nav-cta:hover { background: var(--purple-light) !important; }
 
     .hero {
       min-height: 100vh;
@@ -92,26 +99,41 @@
       padding: 120px 48px 80px;
     }
 
-    .hero h1 {
+    h1 {
       font-family: var(--font-display);
-      font-size: clamp(40px, 8vw, 76px);
+      font-size: clamp(3rem, 8vw, 6rem);
       font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 24px;
+      line-height: 1;
+      margin-bottom: 1.5rem;
     }
 
-    /* Add more of your original CSS styles here if you have them copied (beams, orbs, reveal, pricing cards, etc.) */
-    /* For now this is minimal to make the nav + basic hero visible */
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s, transform 0.8s; }
+    /* Add more of your CSS (beams, orbs, reveal, pricing cards, chat container, etc.) here if you have the rest copied */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
+    #chat-container { max-width: 600px; margin: 2rem auto; padding: 1.5rem; background: var(--surface); border-radius: 12px; border: 1px solid var(--border2); }
+    #chat-messages { height: 300px; overflow-y: auto; margin-bottom: 1rem; }
+    .message { margin: 0.75rem 0; padding: 0.75rem 1rem; border-radius: 12px; max-width: 80%; }
+    .user { background: var(--purple); align-self: flex-end; margin-left: auto; }
+    .ai { background: var(--surface2); }
+
+    input { flex: 1; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); }
+    button { padding: 0.75rem 1.5rem; background: var(--purple); color: white; border: none; border-radius: 8px; cursor: pointer; }
+
+    #demo-video-container { text-align: center; margin: 4rem auto; max-width: 900px; }
+    iframe { width: 100%; height: 506px; border-radius: 12px; border: none; }
   </style>
 </head>
 <body>
 
+  <!-- Cursor elements -->
+  <div id="cursor" class="cursor"></div>
+  <div id="cursorRing" class="cursor-ring"></div>
+
+  <!-- Nav (your original) -->
   <nav id="nav">
     <a class="nav-logo" href="#">
-      <span>Clarix AI</span>
+      Clarix AI
     </a>
     <div class="nav-links">
       <a href="#solutions">Solutions</a>
@@ -122,18 +144,56 @@
     <a href="#" class="nav-cta">Book a Call</a>
   </nav>
 
+  <!-- Hero section -->
   <section class="hero reveal">
     <h1>Clarity Through Automation</h1>
-    <p>Let AI handle your calls, leads, and follow-ups 24/7</p>
-    <!-- Add more hero content, buttons, etc. when you have them -->
+    <p>Your AI assistant that answers calls, captures leads, and books clients 24/7.</p>
   </section>
 
-  <!-- Cursor elements -->
-  <div id="cursor" class="cursor"></div>
-  <div id="cursorRing" class="cursor-ring"></div>
+  <!-- Live Demo Chat -->
+  <div id="chat-container" class="reveal">
+    <div id="chat-messages"></div>
+    <div style="display: flex; gap: 0.5rem;">
+      <input id="demoInput" type="text" placeholder="Talk to Clarix AI...">
+      <button id="demoSend">Send</button>
+    </div>
+  </div>
+
+  <!-- Demo Video / Animation Placeholder -->
+  <section id="demo-video-container" class="reveal">
+    <h2>See It In Action</h2>
+    <!-- Replace src with your actual video URL (YouTube, Vimeo, or direct mp4) -->
+    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Clarix AI Demo" allowfullscreen></iframe>
+    <p>Click Play to see the full animated demo (phone pickup, reply, booking).</p>
+  </section>
+
+  <!-- Pricing section -->
+  <section class="reveal" style="text-align: center; padding: 4rem 2rem;">
+    <h2>Simple Pricing. Unreasonable Results.</h2>
+    <p>The math is stupid simple. One new client pays for the plan — repeat monthly.</p>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; margin-top: 3rem;">
+      <div style="background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--border2); width: 300px;">
+        <h3>Starter</h3>
+        <p style="font-size: 2.5rem; margin: 1rem 0;">$500</p>
+        <p>one-time setup + $300/mo</p>
+      </div>
+      <div style="background: var(--purple-dim); padding: 2rem; border-radius: 12px; border: 1px solid var(--purple); width: 300px;">
+        <h3>Growth <span style="background: var(--purple); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem;">Most Popular</span></h3>
+        <p style="font-size: 2.5rem; margin: 1rem 0;">$850</p>
+        <p>one-time setup + $500/mo</p>
+      </div>
+      <div style="background: var(--surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--border2); width: 300px;">
+        <h3>Elite</h3>
+        <p style="font-size: 2.5rem; margin: 1rem 0;">$1,500</p>
+        <p>one-time setup + $1,000/mo</p>
+      </div>
+    </div>
+  </section>
 
   <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Cursor setup
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursorRing');
     let mx = 0, my = 0, rx = 0, ry = 0;
@@ -156,13 +216,47 @@
       animateRing();
     }
 
-    // Basic nav scroll effect
-    window.addEventListener('scroll', () => {
-      const nav = document.getElementById('nav');
-      if (nav) nav.classList.toggle('scrolled', window.scrollY > 40);
-    });
+    // Basic chat to proxy (test)
+    const chatMessages = document.getElementById('chat-messages');
+    const demoInput = document.getElementById('demoInput');
+    const demoSend = document.getElementById('demoSend');
 
-    // Reveal elements when in view
+    if (demoSend && demoInput && chatMessages) {
+      demoSend.addEventListener('click', async () => {
+        const text = demoInput.value.trim();
+        if (!text) return;
+
+        chatMessages.innerHTML += `<div class="message user">${text}</div>`;
+        demoInput.value = '';
+
+        try {
+          const res = await fetch('https://clarix-ai-proxy.dibarra1524.workers.dev/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              model: 'claude-3-5-sonnet-20241022',
+              max_tokens: 500,
+              messages: [{ role: 'user', content: text }]
+            })
+          });
+          const data = await res.json();
+          chatMessages.innerHTML += `<div class="message ai">${data.content[0].text || 'No response'}</div>`;
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        } catch (err) {
+          chatMessages.innerHTML += `<div class="message ai">Error: ${err.message}</div>`;
+        }
+      });
+    }
+
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    if (nav) {
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+      });
+    }
+
+    // Reveal observer
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -172,8 +266,7 @@
 
     reveals.forEach(r => observer.observe(r));
 
-    // Add your original chat, demo engine, counters, etc. here later if needed
-    console.log("Page loaded - script running safely");
+    console.log("Fixed script running - check if sections appear");
   });
   </script>
 </body>
