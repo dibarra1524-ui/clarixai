@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
       --bg: #05060F;
       --surface: #0B0D1A;
@@ -23,7 +24,9 @@
       --font-display: 'Plus Jakarta Sans', sans-serif;
       --font-body: 'DM Sans', sans-serif;
     }
+
     html { scroll-behavior: smooth; }
+
     body {
       background: var(--bg);
       color: var(--text);
@@ -33,6 +36,7 @@
       overflow-x: hidden;
       cursor: none;
     }
+
     .cursor {
       display: none;
       position: fixed; width: 10px; height: 10px;
@@ -54,6 +58,7 @@
       .cursor { display: block; }
       .cursor-ring { display: block; }
     }
+
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 500;
       padding: 20px 48px;
@@ -64,17 +69,20 @@
       transition: border-color 0.3s;
     }
     nav.scrolled { border-color: var(--border); }
+
     .nav-logo {
       display: flex; align-items: center; gap: 10px;
       font-family: var(--font-display); font-weight: 800;
       font-size: 20px; color: var(--text); text-decoration: none;
     }
+
     .nav-links { display: flex; align-items: center; gap: 36px; }
     .nav-links a {
       color: var(--text-sec); text-decoration: none; font-size: 14px;
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--text); }
+
     .nav-cta {
       background: var(--purple); color: #fff !important;
       padding: 9px 22px; border-radius: 8px;
@@ -82,6 +90,7 @@
       transition: background 0.2s;
     }
     .nav-cta:hover { background: var(--purple-light) !important; }
+
     .hero {
       min-height: 100vh;
       display: flex; flex-direction: column;
@@ -89,6 +98,7 @@
       text-align: center;
       padding: 120px 48px 80px;
     }
+
     h1 {
       font-family: var(--font-display);
       font-size: clamp(3rem, 8vw, 6rem);
@@ -96,20 +106,25 @@
       line-height: 1;
       margin-bottom: 1.5rem;
     }
+
     .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
+
     #chat-container { max-width: 600px; margin: 2rem auto; padding: 1.5rem; background: var(--surface); border-radius: 12px; border: 1px solid var(--border2); }
     #chat-messages { height: 300px; overflow-y: auto; margin-bottom: 1rem; }
     .message { margin: 0.75rem 0; padding: 0.75rem 1rem; border-radius: 12px; max-width: 80%; }
     .user { background: var(--purple); align-self: flex-end; margin-left: auto; }
     .ai { background: var(--surface2); }
+
     input { flex: 1; padding: 0.75rem 1rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--text); }
     button { padding: 0.75rem 1.5rem; background: var(--purple); color: white; border: none; border-radius: 8px; cursor: pointer; }
+
     #demo-video-container { text-align: center; margin: 4rem auto; max-width: 900px; }
     iframe { width: 100%; height: 506px; border-radius: 12px; border: none; }
   </style>
 </head>
 <body>
+
   <div id="cursor" class="cursor"></div>
   <div id="cursorRing" class="cursor-ring"></div>
 
@@ -169,6 +184,7 @@
 
   <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // Cursor setup
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursorRing');
     let mx = 0, my = 0, rx = 0, ry = 0;
@@ -189,6 +205,7 @@
       animateRing();
     }
 
+    // Chat to proxy
     const chatMessages = document.getElementById('chat-messages');
     const demoInput = document.getElementById('demoInput');
     const demoSend = document.getElementById('demoSend');
@@ -209,7 +226,7 @@
             })
           });
           const data = await res.json();
-          chatMessages.innerHTML += `<div class="message ai">${data.content ? data.content[0].text : 'No response'}</div>`;
+          chatMessages.innerHTML += `<div class="message ai">${data.content?.[0]?.text || 'No response'}</div>`;
           chatMessages.scrollTop = chatMessages.scrollHeight;
         } catch (err) {
           chatMessages.innerHTML += `<div class="message ai">Error: ${err.message}</div>`;
@@ -217,6 +234,7 @@
       });
     }
 
+    // Nav scroll
     const nav = document.getElementById('nav');
     if (nav) {
       window.addEventListener('scroll', () => {
@@ -224,6 +242,7 @@
       });
     }
 
+    // Reveal observer
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -232,7 +251,7 @@
     }, { threshold: 0.1 });
     reveals.forEach(r => observer.observe(r));
 
-    console.log("Script running without syntax error - sections should be visible");
+    console.log("Script loaded without syntax error");
   });
   </script>
 </body>
