@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Clarix AI — Clarity Through Automation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      background: #05060F;
+      color: #F0EEFF;
+      font-family: 'DM Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      cursor: none;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(5,6,15,0.95);
+      backdrop-filter: blur(12px);
+      padding: 20px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    nav.scrolled {
+      border-color: rgba(120,100,255,0.25);
+    }
+    .nav-logo {
+      font-size: 24px;
+      font-weight: 800;
+      color: #7B5FFF;
+      text-decoration: none;
+    }
+    .nav-links a {
+      color: #9B91CC;
+      margin: 0 20px;
+      text-decoration: none;
+    }
+    .nav-cta {
+      background: #7B5FFF;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 20px;
+    }
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+    #chat-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background: #0B0D1A;
+      border-radius: 12px;
+      border: 1px solid rgba(123,95,255,0.25);
+    }
+    #chat-messages {
+      height: 300px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+    }
+    .message {
+      margin: 0.75rem 0;
+      padding: 0.75rem 1rem;
+      border-radius: 12px;
+      max-width: 80%;
+    }
+    .user { background: #7B5FFF; margin-left: auto; }
+    .ai { background: #10132B; }
+    input, button {
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 8px;
+    }
+    button {
+      background: #7B5FFF;
+      color: white;
+      cursor: pointer;
+    }
+    #demo-video {
+      max-width: 900px;
+      margin: 4rem auto;
+      text-align: center;
+    }
+    iframe {
+      width: 100%;
+      height: 506px;
+      border-radius: 12px;
+    }
+    #pricing {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    .price-card {
+      display: inline-block;
+      background: #0B0D1A;
+      padding: 2rem;
+      margin: 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(123,95,255,0.25);
+      width: 300px;
+    }
+    .cursor, .cursor-ring {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+    }
+    .cursor {
+      width: 10px;
+      height: 10px;
+      background: #7B5FFF;
+      border-radius: 50%;
+    }
+    .cursor-ring {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(123,95,255,0.5);
+      border-radius: 50%;
+    }
+    @media (pointer: fine) {
+      body { cursor: none; }
+      .cursor, .cursor-ring { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor" class="cursor"></div>
+  <div id="cursor-ring" class="cursor-ring"></div>
+
+  <nav id="nav">
+    <a class="nav-logo" href="#">Clarix AI</a>
+    <div class="nav-links">
+      <a href="#">Solutions</a>
+      <a href="#">How It Works</a>
+      <a href="#">Live Demo</a>
+      <a href="#">Pricing</a>
+    </div>
+    <a href="#" class="nav-cta">Book a Call</a>
+  </nav>
+
+  <section class="hero">
+    <h1>Clarity Through Automation</h1>
+    <p>AI that answers calls, captures leads, books appointments — 24/7.</p>
+  </section>
+
+  <div id="chat-container">
+    <div id="chat-messages"></div>
+    <div style="display:flex; gap:0.5rem;">
+      <input id="chat-input" type="text" placeholder="Talk to Clarix AI...">
+      <button id="chat-send">Send</button>
+    </div>
+  </div>
+
+  <div id="demo-video">
+    <h2>See It In Action</h2>
+    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Clarix AI Demo" allowfullscreen></iframe>
+    <p>Demo video / animation placeholder — replace src with your real video</p>
+  </div>
+
+  <div id="pricing">
+    <h2>Simple Pricing</h2>
+    <div class="price-card">
+      <h3>Starter</h3>
+      <p style="font-size:2rem;">$500 setup + $300/mo</p>
+    </div>
+    <div class="price-card">
+      <h3>Growth</h3>
+      <p style="font-size:2rem;">$850 setup + $500/mo</p>
+    </div>
+    <div class="price-card">
+      <h3>Elite</h3>
+      <p style="font-size:2rem;">$1,500 setup + $1,000/mo</p>
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    document.addEventListener('mousemove', e => {
+      if (cursor) {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      }
+      if (ring) {
+        ring.style.left = e.clientX + 'px';
+        ring.style.top = e.clientY + 'px';
+      }
+    });
+
+    // Chat test to proxy
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
+
+    if (chatSend && chatInput && chatMessages) {
+      chatSend.addEventListener('click', async () => {
+        const text = chatInput.value.trim();
+        if (!text) return;
+        chatMessages.innerHTML += `<div class="message user">${text}</div>`;
+        chatInput.value = '';
+        try {
+          const res = await fetch('https://clarix-ai-proxy.dibarra1524.workers.dev/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              model: 'claude-3-5-sonnet-20241022',
+              max_tokens: 200,
+              messages: [{ role: 'user', content: text }]
+            })
+          });
+          const data = await res.json();
+          chatMessages.innerHTML += `<div class="message ai">${data.content?.[0]?.text || 'No response'}</div>`;
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        } catch (err) {
+          chatMessages.innerHTML += `<div class="message ai">Error: ${err}</div>`;
+        }
+      });
+    }
+
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    if (nav) {
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+      });
+    }
+
+    console.log("Script running - no syntax error");
+  });
+  </script>
+</body>
+</html>
