@@ -1,252 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Clarix AI — Clarity Through Automation</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans&display=swap" rel="stylesheet"/>
-  <style>
-    body {
-      background: #05060F;
-      color: #F0EEFF;
-      font-family: 'DM Sans', sans-serif;
-      margin: 0;
-      padding: 0;
-      cursor: none;
-    }
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(5,6,15,0.95);
-      backdrop-filter: blur(12px);
-      padding: 20px 48px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 10;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s;
-    }
-    nav.scrolled {
-      border-color: rgba(120,100,255,0.25);
-    }
-    .nav-logo {
-      font-size: 24px;
-      font-weight: 800;
-      color: #7B5FFF;
-      text-decoration: none;
-    }
-    .nav-links a {
-      color: #9B91CC;
-      margin: 0 20px;
-      text-decoration: none;
-    }
-    .nav-cta {
-      background: #7B5FFF;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-    }
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 20px;
-    }
-    h1 {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-    }
-    #chat-container {
-      max-width: 600px;
-      margin: 2rem auto;
-      padding: 1.5rem;
-      background: #0B0D1A;
-      border-radius: 12px;
-      border: 1px solid rgba(123,95,255,0.25);
-    }
-    #chat-messages {
-      height: 300px;
-      overflow-y: auto;
-      margin-bottom: 1rem;
-    }
-    .message {
-      margin: 0.75rem 0;
-      padding: 0.75rem 1rem;
-      border-radius: 12px;
-      max-width: 80%;
-    }
-    .user { background: #7B5FFF; margin-left: auto; }
-    .ai { background: #10132B; }
-    input, button {
-      padding: 0.75rem 1rem;
-      border: none;
-      border-radius: 8px;
-    }
-    button {
-      background: #7B5FFF;
-      color: white;
-      cursor: pointer;
-    }
-    #demo-video {
-      max-width: 900px;
-      margin: 4rem auto;
-      text-align: center;
-    }
-    iframe {
-      width: 100%;
-      height: 506px;
-      border-radius: 12px;
-    }
-    #pricing {
-      text-align: center;
-      padding: 4rem 2rem;
-    }
-    .price-card {
-      display: inline-block;
-      background: #0B0D1A;
-      padding: 2rem;
-      margin: 1rem;
-      border-radius: 12px;
-      border: 1px solid rgba(123,95,255,0.25);
-      width: 300px;
-    }
-    .cursor, .cursor-ring {
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-    }
-    .cursor {
-      width: 10px;
-      height: 10px;
-      background: #7B5FFF;
-      border-radius: 50%;
-    }
-    .cursor-ring {
-      width: 36px;
-      height: 36px;
-      border: 1px solid rgba(123,95,255,0.5);
-      border-radius: 50%;
-    }
-    @media (pointer: fine) {
-      body { cursor: none; }
-      .cursor, .cursor-ring { display: block; }
-    }
-  </style>
-</head>
-<body>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Clarix AI — Clarity Through Automation</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <div id="cursor" class="cursor"></div>
-  <div id="cursor-ring" class="cursor-ring"></div>
+  :root {
+    --bg: #05060F;
+    --surface: #0B0D1A;
+    --surface2: #10132B;
+    --border: rgba(120,100,255,0.12);
+    --border2: rgba(120,100,255,0.25);
+    --purple: #7B5FFF;
+    --purple-light: #A48FFF;
+    --purple-dim: rgba(123,95,255,0.15);
+    --violet: #C084FC;
+    --text: #F0EEFF;
+    --text-sec: #9B91CC;
+    --text-dim: #5A5480;
+    --font-display: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
 
-  <nav id="nav">
-    <a class="nav-logo" href="#">Clarix AI</a>
-    <div class="nav-links">
-      <a href="#">Solutions</a>
-      <a href="#">How It Works</a>
-      <a href="#">Live Demo</a>
-      <a href="#">Pricing</a>
-    </div>
-    <a href="#" class="nav-cta">Book a Call</a>
-  </nav>
+  html { scroll-behavior: smooth; }
 
-  <section class="hero">
-    <h1>Clarity Through Automation</h1>
-    <p>AI that answers calls, captures leads, books appointments — 24/7.</p>
-  </section>
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: none;
+  }
 
-  <div id="chat-container">
-    <div id="chat-messages"></div>
-    <div style="display:flex; gap:0.5rem;">
-      <input id="chat-input" type="text" placeholder="Talk to Clarix AI...">
-      <button id="chat-send">Send</button>
-    </div>
-  </div>
+  .cursor {
+    display: none;
+    position: fixed; width: 10px; height: 10px;
+    background: var(--purple); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    display: none;
+    position: fixed; width: 36px; height: 36px;
+    border: 1px solid rgba(123,95,255,0.5);
+    border-radius: 50%; pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease-out, width 0.3s, height 0.3s, opacity 0.3s;
+  }
+  @media (pointer: fine) {
+    .cursor { display: block; }
+    .cursor-ring { display: block; }
+  }
 
-  <div id="demo-video">
-    <h2>See It In Action</h2>
-    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Clarix AI Demo" allowfullscreen></iframe>
-    <p>Demo video / animation placeholder — replace src with your real video</p>
-  </div>
+  .light-beam {
+    position: fixed; pointer-events: none; z-index: 0;
+    opacity: 0; animation: beamFade 12s ease-in-out infinite;
+  }
+  .beam-1 {
+    top: -200px; left: 15%; width: 1px; height: 100vh;
+    background: linear-gradient(to bottom, transparent, rgba(123,95,255,0.4), rgba(164,143,255,0.15), transparent);
+    animation-delay: 0s; transform: rotate(-8deg);
+  }
+  .beam-2 {
+    top: -200px; left: 55%; width: 1px; height: 100vh;
+    background: linear-gradient(to bottom, transparent, rgba(192,132,252,0.25), rgba(123,95,255,0.1), transparent);
+    animation-delay: 4s; transform: rotate(5deg);
+  }
+  .beam-3 {
+    top: -200px; right: 20%; width: 1px; height: 100vh;
+    background: linear-gradient(to bottom, transparent, rgba(96,165,250,0.2), rgba(123,95,255,0.1), transparent);
+    animation-delay: 8s; transform: rotate(12deg);
+  }
+  @keyframes beamFade {
+    0%, 100% { opacity: 0; }
+    20%, 80% { opacity: 1; }
+  }
 
-  <div id="pricing">
-    <h2>Simple Pricing</h2>
-    <div class="price-card">
-      <h3>Starter</h3>
-      <p style="font-size:2rem;">$500 setup + $300/mo</p>
-    </div>
-    <div class="price-card">
-      <h3>Growth</h3>
-      <p style="font-size:2rem;">$850 setup + $500/mo</p>
-    </div>
-    <div class="price-card">
-      <h3>Elite</h3>
-      <p style="font-size:2rem;">$1,500 setup + $1,000/mo</p>
-    </div>
-  </div>
+  body::after {
+    content: '';
+    position: fixed; inset: 0; pointer-events: none; z-index: 999;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(123,95,255,0.015) 2px,
+      rgba(123,95,255,0.015) 4px
+    );
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025; pointer-events: none; z-index: 1000;
+  }
 
-  <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Cursor
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursor-ring');
-    document.addEventListener('mousemove', e => {
-      if (cursor) {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-      }
-      if (ring) {
-        ring.style.left = e.clientX + 'px';
-        ring.style.top = e.clientY + 'px';
-      }
-    });
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(5,6,15,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  nav.scrolled { border-color: var(--border); }
 
-    // Chat test to proxy
-    const chatMessages = document.getElementById('chat-messages');
-    const chatInput = document.getElementById('chat-input');
-    const chatSend = document.getElementById('chat-send');
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-display); font-weight: 800;
+    font-size: 20px; color: var(--text); text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo-icon {
+    width: 36px; height: 36px; background: var(--purple); border-radius: 8px;
+  }
 
-    if (chatSend && chatInput && chatMessages) {
-      chatSend.addEventListener('click', async () => {
-        const text = chatInput.value.trim();
-        if (!text) return;
-        chatMessages.innerHTML += `<div class="message user">${text}</div>`;
-        chatInput.value = '';
-        try {
-          const res = await fetch('https://clarix-ai-proxy.dibarra1524.workers.dev/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              model: 'claude-3-5-sonnet-20241022',
-              max_tokens: 200,
-              messages: [{ role: 'user', content: text }]
-            })
-          });
-          const data = await res.json();
-          chatMessages.innerHTML += `<div class="message ai">${data.content?.[0]?.text || 'No response'}</div>`;
-          chatMessages.scrollTop = chatMessages.scrollHeight;
-        } catch (err) {
-          chatMessages.innerHTML += `<div class="message ai">Error: ${err}</div>`;
-        }
-      });
-    }
+  .nav-links { display: flex; align-items: center; gap: 36px; }
+  .nav-links a {
+    color: var(--text-sec); text-decoration: none; font-size: 14px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
 
-    // Nav scroll
-    const nav = document.getElementById('nav');
-    if (nav) {
-      window.addEventListener('scroll', () => {
-        nav.classList.toggle('scrolled', window.scrollY > 40);
-      });
-    }
+  .nav-cta {
+    background: var(--purple); color: #fff !important;
+    padding: 9px 22px; border-radius: 8px;
+    font-weight: 500 !important; font-size: 14px !important;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--purple-light) !important; }
 
-    console.log("Script running - no syntax error");
-  });
-  </script>
-</body>
-</html>
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 48px 80px;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 8vw, 76px);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  /* ... the rest of your CSS goes here if you have more (beams, orbs, reveal, pricing, chat, etc.) ... */
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+  .reveal.visible { opacity: 1;
